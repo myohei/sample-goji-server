@@ -13,7 +13,7 @@ import (
 
 var sampleJson string;
 
-func hello(c web.C, w http.ResponseWriter, r *http.Request) {
+func sampleJsonHandle(c web.C, w http.ResponseWriter, r *http.Request) {
 	if sampleJson == "" {
 		b, err := ioutil.ReadFile("sample.json")
 		if err != nil {
@@ -22,16 +22,12 @@ func hello(c web.C, w http.ResponseWriter, r *http.Request) {
 		sampleJson = string(b)
 	}
 	time.Sleep(1 * time.Second)
+	w.Header().Set("Content-Type", "application/json")
 	fmt.Fprintf(w, sampleJson)
 }
 
 func login(c web.C, w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
-	//	b, err := ioutil.ReadAll(r.Body)
-	//	if err != nil {
-	//		http.Error(w, err.Error(), http.StatusBadRequest)
-	//		return
-	//	}
 	var user User
 	bodyDecoder := json.NewDecoder(r.Body)
 	err := bodyDecoder.Decode(&user)
@@ -59,7 +55,7 @@ func main() {
 	dashboard := web.New()
 	dashboard.Use(auth)
 	dashboard.Use(middleware.SubRouter)
-	dashboard.Get("/json", hello)
+	dashboard.Get("/json", sampleJsonHandle)
 	goji.Handle("/dashboard/*", dashboard)
 
 	goji.Use(middleware.Logger)
