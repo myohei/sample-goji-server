@@ -1,0 +1,17 @@
+{
+	"version": 0,
+	"dependencies": [
+		{
+			"importpath": "github.com/goji/param",
+			"repository": "https://github.com/goji/param",
+			"revision": "da86c81e3e3c23b1948bc7a003d381250a032aa7",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/zenazn/goji",
+			"repository": "https://github.com/zenazn/goji",
+			"revision": "09c4160eb01c64b5a7d3b8dfd93712828143c4ce",
+			"branch": "master"
+		}
+	]
+}
