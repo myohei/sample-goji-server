@@ -35,6 +35,12 @@ func login(c web.C, w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	user.UserId = "12345";
+	log.Println(user)
+	if user.Password == "error" {
+		http.Error(w, "パスワードエラーです", http.StatusBadRequest)
+		return
+	}
 	expiration := time.Now()
 	expiration = expiration.Add(10 * time.Minute)
 	http.SetCookie(w, &http.Cookie{Name:"uid",
@@ -63,8 +69,9 @@ func main() {
 }
 
 type User struct {
-	Email    string    `json:"email"`
-	Password string    `json:"password"`
+	Email    string        `json:"email"`
+	Password string        `json:"password"`
+	UserId   string        `json:"user_id"`
 }
 
 
